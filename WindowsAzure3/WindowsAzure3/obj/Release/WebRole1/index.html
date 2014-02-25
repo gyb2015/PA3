@@ -1,0 +1,65 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script>
+        function startCrawler() {
+            $.ajax({
+                url: "Admin.asmx/StartCrawler",
+                type: "POST",
+                data: "{}",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (msg) {
+                    $("#logger").html("StartCrawler event sent!");
+                },
+                error: function (msg) {
+                    $("#logger").html(JSON.stringify(msg));
+                }
+            });
+        }
+
+        function clearCrawler() {
+            $.ajax({
+                url: "Admin.asmx/ClearCrawler",
+                type: "POST",
+                data: "{}",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (msg) {
+                    $("#logger").html("StopCrawler event sent!");
+                },
+                error: function (msg) {
+                    $("#logger").html(JSON.stringify(msg));
+                }
+            });
+        }
+
+        function getStats() {
+            $.ajax({
+                url: "Admin.asmx/GetStats",
+                type: "POST",
+                data: "{}",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (msg) {
+                    $("#stats").html(msg.d);
+                },
+                error: function (msg) {
+                    $("#logger").html(JSON.stringify(msg));
+                }
+            });
+        }
+
+        setInterval(getStats, 1000);
+    </script>
+</head>
+<body>
+    <input type="button" onclick="startCrawler()" value="Start Crawler" />
+    <input type="button" onclick="clearCrawler()" value="Clear Crawler" />
+    <div id="logger"></div>
+    <div id="stats"></div>
+
+</body>
+</html>
